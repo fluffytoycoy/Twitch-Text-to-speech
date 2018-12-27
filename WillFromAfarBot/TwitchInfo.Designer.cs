@@ -61,7 +61,7 @@ namespace WillFromAfarBot {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dfaf.
+        ///   Looks up a localized string similar to .
         /// </summary>
         internal static string String1 {
             get {
