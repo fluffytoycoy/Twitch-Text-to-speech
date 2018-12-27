@@ -15,6 +15,8 @@ namespace WillFromAfarBot
         public Form1()
         {
             InitializeComponent();
+            TwitchChatBot bot = new TwitchChatBot();
+            bot.Connect();
         }
 
         private void button1_Click(object sender, EventArgs e)
