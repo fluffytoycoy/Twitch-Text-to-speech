@@ -61,38 +61,11 @@ namespace WillFromAfarBot {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to kyk8u6q6bes40orq9jx0lndzy4732c.
+        ///   Looks up a localized string similar to dfaf.
         /// </summary>
-        internal static string BotToken {
+        internal static string String1 {
             get {
-                return ResourceManager.GetString("BotToken", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SpaceBotCraig.
-        /// </summary>
-        internal static string BotUsername {
-            get {
-                return ResourceManager.GetString("BotUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fluffytoycoy.
-        /// </summary>
-        internal static string ChannelName {
-            get {
-                return ResourceManager.GetString("ChannelName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to abhb4o3rysm6zvtcm72yhvnlvdr0xv.
-        /// </summary>
-        internal static string ClientId {
-            get {
-                return ResourceManager.GetString("ClientId", resourceCulture);
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }

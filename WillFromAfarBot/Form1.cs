@@ -17,7 +17,11 @@ namespace WillFromAfarBot
             InitializeComponent();
             TwitchChatBot bot = new TwitchChatBot();
             bot.Connect();
+          
+            richTextBox1.Text = Logger.GetLastLog();
         }
+
+     
 
         private void button1_Click(object sender, EventArgs e)
         {

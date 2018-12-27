@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2019
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WillFromAfarBot", "WillFromAfarBot\WillFromAfarBot.csproj", "{E29A7290-23D5-496A-9693-0FF0CA364F83}"
 EndProject
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A2881666-EE8E-4F2D-8C01-AA4317477C9B}
+		SolutionGuid = {E2625CCD-E29C-47B5-B7F3-984A4181835F}
 	EndGlobalSection
 EndGlobal

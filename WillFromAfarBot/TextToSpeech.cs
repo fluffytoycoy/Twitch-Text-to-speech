@@ -41,7 +41,6 @@ namespace WillFromAfarBot
             }
         }
 
-
         public void Speak()
         {
             if (VoiceUrlString != "")

@@ -117,20 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BotToken" xml:space="preserve">
-    <value>kyk8u6q6bes40orq9jx0lndzy4732c</value>
-    <comment>bot id token</comment>
-  </data>
-  <data name="BotUsername" xml:space="preserve">
-    <value>SpaceBotCraig</value>
-    <comment>bot that will connect</comment>
-  </data>
-  <data name="ChannelName" xml:space="preserve">
-    <value>Fluffytoycoy</value>
-    <comment>channel to connect to</comment>
-  </data>
-  <data name="ClientId" xml:space="preserve">
-    <value>abhb4o3rysm6zvtcm72yhvnlvdr0xv</value>
-    <comment>app id token</comment>
+  <data name="String1" xml:space="preserve">
+    <value>dfaf</value>
   </data>
 </root>
