@@ -15,20 +15,20 @@ namespace WillFromAfarBot
         public Form1()
         {
             InitializeComponent();
-            TwitchChatBot bot = new TwitchChatBot();
+            var bot = new TwitchChatBot();
             bot.Connect();
-          
-            richTextBox1.Text = Logger.GetLastLog();
         }
 
-     
+        private void Logger_LogAdded(object sender, EventArgs e)
+        {
+            ThreadHelper.AddText(this, richTextBox1, Logger.GetLastLog());
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text.Trim() != "")
             {
                 var textToSpeech = new TextToSpeech();
-                //var selectedVoice = comboBox1.GetItemText(comboBox1.SelectedItem);
                 var text = textBox1.Text;
                 try
                 {

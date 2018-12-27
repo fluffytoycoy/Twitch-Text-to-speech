@@ -16,16 +16,20 @@ namespace WillFromAfarBot
         {
             log.Add(message);
 
-            if (LogAdded != null)
-                LogAdded(null, EventArgs.Empty);
+            LogAdded?.Invoke(null, new EventArgs());
         }
 
         public static string GetLastLog()
         {
             if (log.Count > 0)
+            {
                 return log[log.Count - 1];
+            }
             else
+            {
                 return null;
+            }
+               
         }
     }
 }

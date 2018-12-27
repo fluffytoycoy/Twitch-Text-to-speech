@@ -18,15 +18,10 @@ namespace WillFromAfarBot
 
         internal void Connect()
         {
-            
             client = new TwitchClient();
             client.Initialize(credentials, TwitchInfo.ChannelName);
             client.OnMessageReceived += Client_OnMessageReceived;
-            client.OnLog += Client_OnLog;
-            //WebSocketClient test = new WebSocketClient();
-
             client.Connect();
-
         }
 
         private void Client_OnLog(object sender, OnLogArgs e)

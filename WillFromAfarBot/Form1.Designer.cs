@@ -1,4 +1,6 @@
-﻿namespace WillFromAfarBot
+﻿using System;
+
+namespace WillFromAfarBot
 {
     partial class Form1
     {
@@ -28,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -72,10 +75,12 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+
+            Logger.LogAdded += new EventHandler(Logger_LogAdded);
         }
 
         #endregion
-
+        
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button1;

@@ -166,13 +166,14 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TwitchInfo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TwitchInfo.resx</DependentUpon>
-    </Compile>
+    <Compile Include="ThreadHelper.cs" />
     <Compile Include="TextToSpeech.cs" />
     <Compile Include="TwitchChatBot.cs" />
+    <Compile Include="TwitchInfo.Designer.cs">
+      <DependentUpon>TwitchInfo.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
