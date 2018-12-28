@@ -72,7 +72,7 @@ namespace WillFromAfarBot
             // logIn1
             // 
             this.logIn1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.logIn1.Location = new System.Drawing.Point(173, 77);
+            this.logIn1.Location = new System.Drawing.Point(-65, -30);
             this.logIn1.Name = "logIn1";
             this.logIn1.Size = new System.Drawing.Size(443, 278);
             this.logIn1.TabIndex = 3;
@@ -81,12 +81,14 @@ namespace WillFromAfarBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(325, 237);
             this.Controls.Add(this.logIn1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.textBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();

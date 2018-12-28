@@ -19,7 +19,7 @@ namespace WillFromAfarBot
             var credentials = new ConnectionCredentials(info.BotName, info.BotId);
             client = new TwitchClient();
             client.Initialize(credentials, info.ChannelName);
-            client.OnLog += Client_OnLog;
+            
             client.OnMessageReceived += Client_OnMessageReceived;
             client.Connect();
         }

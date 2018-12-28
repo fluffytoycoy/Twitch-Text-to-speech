@@ -16,11 +16,13 @@ namespace WillFromAfarBot
         public Form1()
         {
             InitializeComponent();
+            LoadEvents();
         }
 
         private void Logger_LogAdded(object sender, EventArgs e)
         {
             ThreadHelper.AddText(this, richTextBox1, Logger.GetLastLog());
+            richTextBox1.ScrollToCaret();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -57,9 +59,16 @@ namespace WillFromAfarBot
 
         private void ShowBotMenu()
         {
+            this.Size = new Size(816, 488);
             textBox1.Enable();
             button1.Enable();
-            richTextBox1.Enable();
+            richTextBox1.Enable();  
+        }
+
+        private void LoadEvents()
+        {
+            Logger.LogAdded += new EventHandler(Logger_LogAdded);
+            logIn1.Correct_Login_Event += new EventHandler(Correct_Login_Event);
         }
     }
 }

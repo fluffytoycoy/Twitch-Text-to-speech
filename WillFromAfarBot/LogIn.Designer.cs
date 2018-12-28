@@ -40,7 +40,7 @@
             // button1
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.Location = new System.Drawing.Point(231, 241);
+            this.button1.Location = new System.Drawing.Point(232, 158);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -51,7 +51,7 @@
             // ChannelName
             // 
             this.ChannelName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ChannelName.Location = new System.Drawing.Point(146, 76);
+            this.ChannelName.Location = new System.Drawing.Point(147, 27);
             this.ChannelName.Name = "ChannelName";
             this.ChannelName.Size = new System.Drawing.Size(160, 20);
             this.ChannelName.TabIndex = 1;
@@ -59,7 +59,7 @@
             // BotName
             // 
             this.BotName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BotName.Location = new System.Drawing.Point(146, 121);
+            this.BotName.Location = new System.Drawing.Point(147, 72);
             this.BotName.Name = "BotName";
             this.BotName.Size = new System.Drawing.Size(160, 20);
             this.BotName.TabIndex = 1;
@@ -67,7 +67,7 @@
             // BotId
             // 
             this.BotId.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.BotId.Location = new System.Drawing.Point(146, 166);
+            this.BotId.Location = new System.Drawing.Point(147, 117);
             this.BotId.Name = "BotId";
             this.BotId.Size = new System.Drawing.Size(160, 20);
             this.BotId.TabIndex = 1;
@@ -76,7 +76,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 79);
+            this.label1.Location = new System.Drawing.Point(14, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 2;
@@ -86,7 +86,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(36, 124);
+            this.label3.Location = new System.Drawing.Point(37, 75);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 2;
@@ -96,7 +96,7 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(58, 169);
+            this.label4.Location = new System.Drawing.Point(59, 120);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 3;
@@ -114,7 +114,7 @@
             this.Controls.Add(this.ChannelName);
             this.Controls.Add(this.button1);
             this.Name = "LogIn";
-            this.Size = new System.Drawing.Size(324, 313);
+            this.Size = new System.Drawing.Size(324, 199);
             this.ResumeLayout(false);
             this.PerformLayout();
 
