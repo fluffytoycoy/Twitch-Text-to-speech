@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace WillFromAfarBot
 {
+  
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
-            var bot = new TwitchChatBot();
-            bot.Connect();
         }
 
         private void Logger_LogAdded(object sender, EventArgs e)
@@ -43,6 +42,24 @@ namespace WillFromAfarBot
             }
         }
 
-       
+        private void Correct_Login_Event(object sender, EventArgs e)
+        {
+            logIn1.Disable();
+            ShowBotMenu();
+        }
+        
+        private void HideBotMenu()
+        {
+            textBox1.Disable();
+            button1.Disable();
+            richTextBox1.Disable();
+        }
+
+        private void ShowBotMenu()
+        {
+            textBox1.Enable();
+            button1.Enable();
+            richTextBox1.Enable();
+        }
     }
 }

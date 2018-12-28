@@ -12,14 +12,14 @@ namespace WillFromAfarBot
 {
     public class TwitchChatBot
     {
-        readonly ConnectionCredentials credentials = 
-            new ConnectionCredentials(TwitchInfo.BotUsername, TwitchInfo.BotToken);
         TwitchClient client;
 
-        internal void Connect()
+        internal void Connect(LoginModel info)
         {
+            var credentials = new ConnectionCredentials(info.BotName, info.BotId);
             client = new TwitchClient();
-            client.Initialize(credentials, TwitchInfo.ChannelName);
+            client.Initialize(credentials, info.ChannelName);
+            client.OnLog += Client_OnLog;
             client.OnMessageReceived += Client_OnMessageReceived;
             client.Connect();
         }
@@ -31,6 +31,7 @@ namespace WillFromAfarBot
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
+            Logger.Log(e.ChatMessage.DisplayName + ":" + e.ChatMessage.Message);
             var WillFromAfar = new TextToSpeech();
             switch (e.ChatMessage.Message)
             {
