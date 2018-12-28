@@ -16,17 +16,14 @@ namespace WillFromAfarBot
     {
         private HttpClient Client;
         private readonly FormUrlEncodedContent DummyFormUrl;
-        public WebRequest RequestUrl { get; set; }
-        public string VoiceUrlString { get; set; }
+        private WebRequest WebRequestUrl;
+        private string VoiceUrlString;
 
         public TextToSpeech()
         {
             Client = new HttpClient();
             DummyFormUrl = new FormUrlEncodedContent(new Dictionary<string, string>());
-            RequestUrl = WebRequest.Create
-            ("http://www.acapela-group.com:8080/webservices/1-34-01-Mobility/Synthesizer");
-            RequestUrl.Method = "POST";
-            RequestUrl.ContentType = "application/x-www-form-urlencoded";
+            BuildWebRequest();
         }
 
         public void ConvertText(string text, string voice = "")
@@ -85,13 +82,13 @@ namespace WillFromAfarBot
 
         private void RequestVoiceUrlString(string text, string voiceid)
         {
-            using (var stream = RequestUrl.GetRequestStream())
+            using (var stream = WebRequestUrl.GetRequestStream())
             {
                 var voiceData = EncodeVoiceData(text, voiceid);
                 stream.WriteAsync(voiceData, 0, voiceData.Length);
             }
 
-            VoiceUrlString = ParseVoiceString(RequestUrl.GetResponse());
+            VoiceUrlString = ParseVoiceString(WebRequestUrl.GetResponse());
         }
 
         private byte[] EncodeVoiceData(string text, string voiceid)
@@ -131,5 +128,14 @@ namespace WillFromAfarBot
 
             return code.Groups.Count > 1 ? code.Groups[1].ToString() : "";
         }
+
+        private void BuildWebRequest()
+        {
+            WebRequestUrl = WebRequest.Create
+            ("http://www.acapela-group.com:8080/webservices/1-34-01-Mobility/Synthesizer");
+            WebRequestUrl.Method = "POST";
+            WebRequestUrl.ContentType = "application/x-www-form-urlencoded";
+        }
+
     }
 }

@@ -47,8 +47,8 @@ namespace WillFromAfarBot
 
         private void Correct_Login_Event(object sender, EventArgs e)
         {
-            logIn1.Disable();
-            ShowBotMenu();
+           logIn1.Disable();
+           ShowBotMenu();
         }
         
         private void HideBotMenu()
@@ -70,6 +70,7 @@ namespace WillFromAfarBot
         {
             Logger.LogAdded += new EventHandler(Logger_LogAdded);
             logIn1.Correct_Login_Event += new EventHandler(Correct_Login_Event);
+            
         }
     }
 }
