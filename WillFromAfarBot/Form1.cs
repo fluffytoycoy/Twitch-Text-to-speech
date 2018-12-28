@@ -17,8 +17,6 @@ namespace WillFromAfarBot
         {
             InitializeComponent();
             LoadEvents();
-            ShowBotMenu();
-
         }
 
         private void Logger_LogAdded(object sender, EventArgs e)
