@@ -25,16 +25,17 @@ namespace WillFromAfarBot
             richTextBox1.ScrollToCaret();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
+            
             if (textBox1.Text.Trim() != "")
             {
                 var textToSpeech = new TextToSpeech();
                 var text = textBox1.Text;
                 try
                 {
-                    textToSpeech.ConvertText(text);
-                    textToSpeech.Speak();
+                    await Task.Run(() => textToSpeech.ConvertText(text));
+                    await Task.Run(() => textToSpeech.Speak());
                 }
                 catch (Exception a)
                 {
