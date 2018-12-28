@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,12 +46,36 @@ namespace WillFromAfarBot
         {
             if (VoiceUrlString != "")
             {
-                WMPLib.WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer
+                using (Stream ms = new MemoryStream())
                 {
-                    URL = VoiceUrlString
-                };
+                    using (Stream stream = WebRequest.Create(VoiceUrlString)
+                        .GetResponse().GetResponseStream())
+                    {
+                        byte[] buffer = new byte[32768];
+                        int read;
+                        while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            ms.Write(buffer, 0, read);
+                        }
+                    }
 
-                wplayer.controls.play();
+                    ms.Position = 0;
+                    using (WaveStream blockAlignedStream =
+                        new BlockAlignReductionStream(
+                            WaveFormatConversionStream.CreatePcmStream(
+                                new Mp3FileReader(ms))))
+                    {
+                        using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                        {
+                            waveOut.Init(blockAlignedStream);
+                            waveOut.Play();
+                            while (waveOut.PlaybackState == PlaybackState.Playing)
+                            {
+                                System.Threading.Thread.Sleep(100);
+                            }
+                        }
+                    }
+                }
             }
             else
             {
