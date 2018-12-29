@@ -15,5 +15,9 @@ namespace WillFromAfarBot
         public string BotName { get; set; }
 
         public string BotId { get; set; }
+
+        public bool ShouldReconnect { get; set; }
+
+        public int ReconnectionCount { get; set; }
     }
 }

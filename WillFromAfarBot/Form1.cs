@@ -14,7 +14,7 @@ namespace WillFromAfarBot
   
     public partial class Form1 : Form
     {
-        private TwitchChatBot bot = new TwitchChatBot();
+        private TwitchChatBot bot;
         private Timer reconnectionTimer = new Timer();
 
         public Form1()
@@ -58,9 +58,10 @@ namespace WillFromAfarBot
         {
             try
             {
-                bot.Connect(e.GetLoginInfo());
+                BuildTwitchBot().Connect(e.GetLoginInfo());
                 logIn1.Disable();
                 ShowBotMenu();
+                Logger.Log(e.GetLoginInfo().BotName + "Is Connected to" + e.GetLoginInfo().ChannelName + "\'s");
             }
             catch (Exception ex)
             {
@@ -73,6 +74,7 @@ namespace WillFromAfarBot
             textBox1.Disable();
             button1.Disable();
             richTextBox1.Disable();
+            this.Size = new Size(300, 300);
         }
 
         private void ShowBotMenu()
@@ -83,11 +85,17 @@ namespace WillFromAfarBot
             richTextBox1.Enable();  
         }
    
-        private void Client_Disconnected(object sender, EventArgs e)
+        private void Client_Disconnected_Error(object sender, EventArgs e)
         {
             Logger.Log( "Has been disconnected. \nAttempting to reconnect. \n");
             Invoke(new Action(() => button2.Disable()));
             Invoke(new Action (() => reconnectionTimer.Start()));
+        }
+
+        private void Client_Disconnected_Choice(object sender, EventArgs e)
+        {
+            Invoke(new Action (() =>HideBotMenu()));
+            Invoke(new Action (() =>logIn1.Enable()));
         }
 
         private void Reconnect()
@@ -96,17 +104,18 @@ namespace WillFromAfarBot
         }
 
         private void reconnection_tick(object sender, EventArgs e)
-        {
-            
+        {  
             if (bot.IsConnected)
             {
                 reconnectionTimer.Stop();
                 Logger.Log("- Bot has been reconnected \n");
+                bot.Info.ReconnectionCount = 0;
                 Invoke(new Action(() => button2.Enable()));
             }
-            else if (bot.ReconnectionCount > 10)
+            else if (bot.Info.ReconnectionCount > 10)
             {
                 Logger.Log("\n Reconnection Failed \n");
+                bot.Info.ReconnectionCount++;
             }
             else
             {
@@ -116,20 +125,26 @@ namespace WillFromAfarBot
             
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            bot.Info.ShouldReconnect = false;
+            bot.Disconnect();
+        }
+
+        private TwitchChatBot BuildTwitchBot()
+        {
+            bot = new TwitchChatBot();
+            bot.Client_Disconnected_Error += Client_Disconnected_Error;
+            bot.Client_Disconnected_Choice += Client_Disconnected_Choice;
+            return bot;
+        }
+
         private void LoadEvents()
         {
             Logger.LogAdded += new EventHandler(Logger_LogAdded);
             logIn1.Login_Event += new EventHandler<LoginEvent>(Correct_Login_Event);
-            bot.Client_Disconnected += Client_Disconnected;
             reconnectionTimer.Interval = 1000;
             reconnectionTimer.Tick += reconnection_tick;
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            bot.Disconnect();
-           
         }
     }
 }

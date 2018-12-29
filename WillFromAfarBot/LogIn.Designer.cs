@@ -43,7 +43,7 @@
             this.button1.Location = new System.Drawing.Point(232, 158);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Connect";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -62,7 +62,7 @@
             this.BotName.Location = new System.Drawing.Point(147, 72);
             this.BotName.Name = "BotName";
             this.BotName.Size = new System.Drawing.Size(160, 20);
-            this.BotName.TabIndex = 1;
+            this.BotName.TabIndex = 2;
             // 
             // BotId
             // 
@@ -70,7 +70,7 @@
             this.BotId.Location = new System.Drawing.Point(147, 117);
             this.BotId.Name = "BotId";
             this.BotId.Size = new System.Drawing.Size(160, 20);
-            this.BotId.TabIndex = 1;
+            this.BotId.TabIndex = 3;
             // 
             // label1
             // 
