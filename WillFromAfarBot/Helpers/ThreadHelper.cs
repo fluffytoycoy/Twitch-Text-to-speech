@@ -10,7 +10,7 @@ namespace WillFromAfarBot
     public static class ThreadHelper
     {
         delegate void SetTextCallback(Form targetForm, Control control, string text);
-
+        delegate void SetAutoScroll(Form targetForm, TextBoxBase control);
         /// <summary>
         /// Set text property of various controls
         /// </summary>
@@ -40,7 +40,21 @@ namespace WillFromAfarBot
             }
             else
             {
-                control.Text += text + "\n";
+                control.Text += text;
+            }
+        }
+
+        public static void AutoScroll(Form targetform, TextBoxBase control)
+        {
+            if (control.InvokeRequired)
+            {
+                SetAutoScroll autoScroll = new SetAutoScroll(AutoScroll);
+                targetform.Invoke(autoScroll, new object[] { targetform, control});
+            }
+            else
+            {
+                control.SelectionStart = control.Text.Length;
+                control.ScrollToCaret();
             }
         }
     }

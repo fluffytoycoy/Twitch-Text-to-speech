@@ -21,13 +21,13 @@ namespace WillFromAfarBot
         {
             InitializeComponent();
             LoadEvents();
-            //richTextBox1.ScrollToCaret();
+            
         }
 
         private void Logger_LogAdded(object sender, EventArgs e)
         {
             ThreadHelper.AddText(this, richTextBox1, Logger.GetLastLog());
-            
+            ThreadHelper.AutoScroll(this, richTextBox1);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -85,11 +85,10 @@ namespace WillFromAfarBot
    
         private void Client_Disconnected(object sender, EventArgs e)
         {
-            Logger.Log( "Has been disconnected. \n Attempting to reconnect. \n");
-  
+            Logger.Log( "Has been disconnected. \nAttempting to reconnect. \n");
+            Invoke(new Action(() => button2.Disable()));
             Invoke(new Action (() => reconnectionTimer.Start()));
         }
-
 
         private void Reconnect()
         {
@@ -98,11 +97,12 @@ namespace WillFromAfarBot
 
         private void reconnection_tick(object sender, EventArgs e)
         {
-            bot.Reconnect();
+            
             if (bot.IsConnected)
             {
                 reconnectionTimer.Stop();
-                Logger.Log("Bot has been reconnected");
+                Logger.Log("- Bot has been reconnected \n");
+                Invoke(new Action(() => button2.Enable()));
             }
             else if (bot.ReconnectionCount > 10)
             {
@@ -110,7 +110,8 @@ namespace WillFromAfarBot
             }
             else
             {
-                Logger.Log(".");
+                bot.Reconnect();
+                Logger.Log("-");
             }
             
         }
