@@ -14,14 +14,12 @@ namespace WillFromAfarBot
     {
         private TwitchClient client;
         private ConnectionCredentials botCredentials;
+        public bool IsConnected => client.IsConnected;
         public EventHandler Client_Disconnected;
 
-        public LoginModel Info { get; set; }
+        public int ReconnectionCount {get; set;}
 
-        public bool IsConnected()
-        {
-            return client.IsConnected;
-        }
+        public LoginModel Info { get; set; }
 
         internal void Connect(LoginModel loginInput)
         {
@@ -29,6 +27,16 @@ namespace WillFromAfarBot
             ChangeBotCredentials();
             InitializeClient();
             client.Connect();
+        }
+
+        internal void Reconnect()
+        {
+            client.Connect();
+        }
+
+        internal void Disconnect()
+        {
+            client.Disconnect();
         }
 
         private void Client_OnDisconnect(object sender, EventArgs e)
@@ -43,14 +51,16 @@ namespace WillFromAfarBot
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
-            Logger.Log(e.ChatMessage.DisplayName + ":" + e.ChatMessage.Message);
             var WillFromAfar = new TextToSpeech();
-            switch (e.ChatMessage.Message.ToLower())
+            Logger.Log(e.ChatMessage.DisplayName + ":" + e.ChatMessage.Message);
+            if (e.ChatMessage.Message.StartsWith("!"))
             {
-                case "!will":
+                if (e.ChatMessage.Message.StartsWith("!will"))
+                {
                     WillFromAfar.ConvertText(e.ChatMessage.Message.Substring(5));
                     WillFromAfar.Speak();
-                    break;
+                }
+
             }
         }
 

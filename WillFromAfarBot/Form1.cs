@@ -15,18 +15,19 @@ namespace WillFromAfarBot
     public partial class Form1 : Form
     {
         private TwitchChatBot bot = new TwitchChatBot();
-        private Timer reconnectionTimer;
+        private Timer reconnectionTimer = new Timer();
 
         public Form1()
         {
             InitializeComponent();
             LoadEvents();
+            //richTextBox1.ScrollToCaret();
         }
 
         private void Logger_LogAdded(object sender, EventArgs e)
         {
             ThreadHelper.AddText(this, richTextBox1, Logger.GetLastLog());
-            richTextBox1.ScrollToCaret();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -84,20 +85,34 @@ namespace WillFromAfarBot
    
         private void Client_Disconnected(object sender, EventArgs e)
         {
-            Logger.Log(bot.Info.BotName + "Has been disconnected. \n Attempting to reconnect. \n");
-            reconnectionTimer = new Timer();
-            reconnectionTimer.Interval = 10000;
-            reconnectionTimer.Start();            
+            Logger.Log( "Has been disconnected. \n Attempting to reconnect. \n");
+  
+            Invoke(new Action (() => reconnectionTimer.Start()));
+        }
+
+
+        private void Reconnect()
+        {
+            bot.Connect(bot.Info);
         }
 
         private void reconnection_tick(object sender, EventArgs e)
         {
-            bot.Connect(bot.Info);
-            if (bot.IsConnected())
+            bot.Reconnect();
+            if (bot.IsConnected)
             {
                 reconnectionTimer.Stop();
-                Logger.Log(bot.Info.BotName + "Has reconnected to" + bot.Info.ChannelName + "'s channel");
+                Logger.Log("Bot has been reconnected");
             }
+            else if (bot.ReconnectionCount > 10)
+            {
+                Logger.Log("\n Reconnection Failed \n");
+            }
+            else
+            {
+                Logger.Log(".");
+            }
+            
         }
 
         private void LoadEvents()
@@ -105,9 +120,15 @@ namespace WillFromAfarBot
             Logger.LogAdded += new EventHandler(Logger_LogAdded);
             logIn1.Login_Event += new EventHandler<LoginEvent>(Correct_Login_Event);
             bot.Client_Disconnected += Client_Disconnected;
-            reconnectionTimer.Tick += new EventHandler(reconnection_tick);
+            reconnectionTimer.Interval = 1000;
+            reconnectionTimer.Tick += reconnection_tick;
 
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            bot.Disconnect();
+           
+        }
     }
 }
