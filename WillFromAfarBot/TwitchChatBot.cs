@@ -13,22 +13,27 @@ namespace WillFromAfarBot
     public class TwitchChatBot
     {
         private TwitchClient client;
-        private LoginModel info;
         private ConnectionCredentials botCredentials;
-        //public EventHandler Client_Disconnected;
+        public EventHandler Client_Disconnected;
+
+        public LoginModel Info { get; set; }
+
+        public bool IsConnected()
+        {
+            return client.IsConnected;
+        }
 
         internal void Connect(LoginModel loginInput)
         {
-            info = loginInput;
+            Info = loginInput;
             ChangeBotCredentials();
             InitializeClient();
             client.Connect();
         }
 
-
-        private void Client_OnDisconnect(object sender, OnDisconnectedArgs e)
+        private void Client_OnDisconnect(object sender, EventArgs e)
         {
-            //Client_Disconnected(this, new EventArgs());
+            Client_Disconnected?.Invoke(this, new EventArgs());
         }
 
         private void Client_OnLog(object sender, OnLogArgs e)
@@ -55,7 +60,7 @@ namespace WillFromAfarBot
         /// </summary>
         public void ChangeBotCredentials()
         {
-            botCredentials = new ConnectionCredentials(info.BotName, info.BotId);
+            botCredentials = new ConnectionCredentials(Info.BotName, Info.BotId);
         }
 
 
@@ -66,7 +71,7 @@ namespace WillFromAfarBot
         private void InitializeClient()
         {
             client = new TwitchClient();
-            client.Initialize(botCredentials, info.ChannelName);
+            client.Initialize(botCredentials, Info.ChannelName);
             InitializeEvents();
         }
 
@@ -74,7 +79,7 @@ namespace WillFromAfarBot
         /// Initialize the Twitch web Client's Events
         /// Seperated out for easier extensions in the future
         /// </summary>
-        public void InitializeEvents()
+        private void InitializeEvents()
         {
             client.OnMessageReceived += Client_OnMessageReceived;
             client.OnDisconnected += Client_OnDisconnect;
