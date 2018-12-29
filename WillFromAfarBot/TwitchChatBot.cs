@@ -14,23 +14,21 @@ namespace WillFromAfarBot
     {
         private TwitchClient client;
         private LoginModel info;
-        public EventHandler Client_Disconnected;
+        private ConnectionCredentials botCredentials;
+        //public EventHandler Client_Disconnected;
 
-        internal void Connect(LoginModel info)
+        internal void Connect(LoginModel loginInput)
         {
-            
-            var botCredentials = new ConnectionCredentials(info.BotName, info.BotId);
-            client = new TwitchClient();
-            client.Initialize(botCredentials, info.ChannelName);
-            client.OnMessageReceived += Client_OnMessageReceived;
-            client.OnDisconnected += Client_OnDisconnect;
+            info = loginInput;
+            ChangeBotCredentials();
+            InitializeClient();
             client.Connect();
         }
 
+
         private void Client_OnDisconnect(object sender, OnDisconnectedArgs e)
         {
-
-            Client_Disconnected(this, new EventArgs());
+            //Client_Disconnected(this, new EventArgs());
         }
 
         private void Client_OnLog(object sender, OnLogArgs e)
@@ -51,9 +49,35 @@ namespace WillFromAfarBot
             }
         }
 
+        /// <summary>
+        /// Loads the bot name and BotId into an object for the twitch client to use.
+        /// Can be used for changing bots out in future.
+        /// </summary>
+        public void ChangeBotCredentials()
+        {
+            botCredentials = new ConnectionCredentials(info.BotName, info.BotId);
+        }
+
+
+        /// <summary>
+        /// Initialize the Twitch web Client
+        /// 
+        /// </summary>
         private void InitializeClient()
         {
+            client = new TwitchClient();
+            client.Initialize(botCredentials, info.ChannelName);
+            InitializeEvents();
+        }
 
+        /// <summary>
+        /// Initialize the Twitch web Client's Events
+        /// Seperated out for easier extensions in the future
+        /// </summary>
+        public void InitializeEvents()
+        {
+            client.OnMessageReceived += Client_OnMessageReceived;
+            client.OnDisconnected += Client_OnDisconnect;
         }
     }
 }

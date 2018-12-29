@@ -45,9 +45,21 @@ namespace WillFromAfarBot
             }
         }
 
-        private void Correct_Login_Event(object sender, EventArgs e)
+        private void Correct_Login_Event(object sender, LoginEvent e)
         {
-           logIn1.Disable();
+            var bot = new TwitchChatBot();
+
+            try
+            {
+                bot.Connect(e.GetLoginInfo());
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
+            logIn1.Disable();
            ShowBotMenu();
         }
         
@@ -69,7 +81,7 @@ namespace WillFromAfarBot
         private void LoadEvents()
         {
             Logger.LogAdded += new EventHandler(Logger_LogAdded);
-            logIn1.Correct_Login_Event += new EventHandler(Correct_Login_Event);
+            logIn1.Login_Event += new EventHandler<LoginEvent>(Correct_Login_Event);
             
         }
     }

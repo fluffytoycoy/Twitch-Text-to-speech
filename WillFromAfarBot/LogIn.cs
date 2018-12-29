@@ -12,32 +12,16 @@ namespace WillFromAfarBot
 {
     public partial class LogIn : UserControl
     {
-        public event EventHandler Correct_Login_Event;
+        public event EventHandler<LoginEvent> Login_Event;
 
         public LogIn()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
-
-            var login = BuildLoginModel();
-            var bot = new TwitchChatBot();
-
-            try
-            {
-                bot.Connect(login);
-                if (Correct_Login_Event != null)
-                {
-                    Correct_Login_Event(this, new EventArgs());
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.Message);
-            }
+            Login_Event?.Invoke(this, new LoginEvent(BuildLoginModel()));
         }
 
         private LoginModel BuildLoginModel()
