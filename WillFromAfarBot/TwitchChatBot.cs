@@ -65,51 +65,85 @@ namespace WillFromAfarBot
 
             Logger.Log(e.ChatMessage.DisplayName + ":" + e.ChatMessage.Message + "\n");
 
-            if (e.ChatMessage.Message.Contains("gamecube or nunchuck"))
-            {
-                client.SendMessage(e.ChatMessage.Channel, $"Well {e.ChatMessage.DisplayName} through mass computations I have found that the game cube is superior");
-            }
-
-
-
-            else if (e.ChatMessage.Message.StartsWith("test", StringComparison.OrdinalIgnoreCase))
-            {
-                
-    
-                //var stream = twitchAPI.Streams.v5.GetStreamByUserAsync();
-                var streamer = twitchAPI.Users.v5.GetUserByNameAsync("fluffytoycoy");
-                var test = streamer.Result.Matches[0].Id;
-                var stream2 = twitchAPI.Streams.v5.GetStreamByUserAsync(test);
-                var stream = twitchAPI.Streams.v5.GetStreamByUserAsync("47077109");
-                var streaminfo = stream2.Result;
-                //var streamR = stream.Result;
-                client.SendMessage(e.ChatMessage.Channel, $"{stream.Result}It is totally {stream}");
-                var streaminfo2 = stream.Result;
-            }
-
             if (e.ChatMessage.Message.StartsWith("!"))
             {
-                if (e.ChatMessage.Message.StartsWith("!will"))
+                var message = e.ChatMessage.Message.Trim();
+      
+                #region !Will Text to speech
+                if (message.StartsWith("!will"))
                 {
                     var WillFromAfar = new TextToSpeech();
                     WillFromAfar.ConvertText(e.ChatMessage.Message.Substring(5));
                     WillFromAfar.Speak();
                 }
-                if (e.ChatMessage.Message.StartsWith("!test"))
+                #endregion
+
+                #region !Test messages the current channel
+                else if (message.StartsWith("!test"))
                 {
                     client.SendMessage(e.ChatMessage.Channel, $"you are testing this in {e.ChatMessage.Channel}'s channel");
                 }
-                if (e.ChatMessage.Message.StartsWith("!Hey, spacebotcraig who is the coolest streamer", StringComparison.OrdinalIgnoreCase))
+                #endregion 
+
+                #region !Coolest messages the current channel
+                else if (message.StartsWith("!coolest", StringComparison.OrdinalIgnoreCase))
                 {
                     client.SendMessage(e.ChatMessage.Channel, $"It is totally {e.ChatMessage.Channel}");
                 }
+                #endregion
+
+                #region !Stats messages stats
+                else if (message.StartsWith("!stats", StringComparison.OrdinalIgnoreCase))
+                {
+                    Stream streamInfo;
+
+                    if (message.Length == 6)
+                    {
+                        streamInfo = GetCurrentInfoAsync(e.ChatMessage.Channel);
+                        if (streamInfo == null)
+                        {
+                            client.SendMessage(e.ChatMessage.Channel, $"{e.ChatMessage.Channel} is currently offline");
+                        }
+                        else
+                        {
+                            PrintStreamInfo(e.ChatMessage.Channel, streamInfo);
+                        }
+
+                    }
+                    else
+                    {
+                        if (message.Substring(6).Trim().Contains(" "))
+                        {
+                            client.SendMessage(e.ChatMessage.Channel, "What kind of channel name is that?");
+                        }
+                        else
+                        {
+                            streamInfo = GetCurrentInfoAsync(e.ChatMessage.Channel);
+                            if (streamInfo == null)
+                            {
+                                client.SendMessage(e.ChatMessage.Channel, $"{e.ChatMessage.Channel} is currently offline");
+                            }
+                            else
+                            {
+                                PrintStreamInfo(e.ChatMessage.Channel, streamInfo);
+                            }
+                        }
+                    }
+
+                }
+                #endregion
             }
         }
 
-        private async Task<StreamByUser> GetCurrentGameAsync()
+        private void PrintStreamInfo(string messagedChannel, Stream searchedChannel)
         {
-            var stream = await twitchAPI.Streams.v5.GetStreamByUserAsync(GetUserId(Info.ChannelName));
-            return stream;
+            client.SendMessage(messagedChannel, $"{searchedChannel.Game}");
+        }
+
+        private Stream GetCurrentInfoAsync(string channel)
+        {
+            var stream = twitchAPI.Streams.v5.GetStreamByUserAsync(GetUserId(channel));
+            return stream.Result.Stream;
         }
 
         private string GetUserId(string channelName)
@@ -117,6 +151,7 @@ namespace WillFromAfarBot
             var user = twitchAPI.Users.v5.GetUserByNameAsync(channelName).Result.Matches;
             return user[0].Id;
         }
+
         /// <summary>
         /// Loads the bot name and BotId into an object for the twitch client to use.
         /// Can be used for changing bots out in future.
@@ -125,7 +160,6 @@ namespace WillFromAfarBot
         {
             botCredentials = new ConnectionCredentials(Info.BotName, Info.BotId);
         }
-
 
         /// <summary>
         /// Initialize the Twitch web Client
